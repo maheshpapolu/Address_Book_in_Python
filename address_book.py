@@ -1,6 +1,7 @@
 create_contacts = 1
 display_contacts = 2
 quit_program = 0
+delete_contact = 4
 
 
 class Contact:
@@ -50,13 +51,25 @@ class AddressBook:
         """
         print(self.contact_dict.get(first_name))
 
+    def delete_contact(self):
+        """
+        create a function for delete the contact
+        :return:
+        """
+        first_name = input("Enter the first name :- ")
+        if first_name in self.contact_dict.keys():
+            self.contact_dict.pop(first_name)
+            print("contact is deleted")
+        else:
+            print("contact doesn't exist")
+
 
 if __name__ == '__main__':
     try:
         address_book = AddressBook()
 
         while True:
-            print("\n1: create new contact\n2: display contact\n3: quit\n")
+            print("\n1: create new contact\n2: display contact\n3: quit\n4: delete contact")
             user_input = int(input("please choose your choice:- "))
             if user_input == create_contacts:
                 first_name = input("Enter your first name:- ")
@@ -84,6 +97,8 @@ if __name__ == '__main__':
                 address_book.display_contact(first_name)
             elif user_input == quit_program:
                 print("you are quit the program")
+            elif user_input == delete_contact:
+                address_book.delete_contact()
             else:
                 print("invalid choice")
 
