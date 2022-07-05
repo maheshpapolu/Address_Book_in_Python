@@ -1,7 +1,12 @@
+create_contacts = 1
+display_contacts = 2
+quit_program = 0
+
+
 class Contact:
     def __init__(self, contact_dict):
         """
-        create constructor for class create contact
+        create constructor for class contact
         :param contact_dict:
         """
         self.first_name = contact_dict.get("first_name")
@@ -15,7 +20,7 @@ class Contact:
 
     def __str__(self) -> str:
         """
-        read input of the class and get output s all the class members
+        read input of the class and get outputs all the class members
         :return:
         """
         return f"first_name = {self.first_name}, last_name = {self.last_name}, address = {self.address}," \
@@ -24,6 +29,7 @@ class Contact:
 
 
 class AddressBook:
+
     def __init__(self):
         self.contact_dict = {}
 
@@ -34,7 +40,7 @@ class AddressBook:
         """
         self.contact_dict.update({contact_obj.first_name: contact_obj})
 
-        return contact
+        return contact_dict
 
     def display_contact(self, first_name):
         """
@@ -48,28 +54,39 @@ class AddressBook:
 if __name__ == '__main__':
     try:
         address_book = AddressBook()
-        first_name = input("Enter your first name:- ")
-        last_name = input("Enter your last name:- ")
-        address = input("Enter your address here:- ")
-        city = input("Enter your city name:- ")
-        state = input("Enter your state name:- ")
-        zipcode = int(input("Enter your zipcode:- "))
-        phone_number = int(input("Enter your phone number:- "))
-        email_address = input("Enter your email_address:- ")
-        contact_dict = {
-            "first_name": first_name,
-            "last_name": last_name,
-            "address": address,
-            "city": city,
-            "state": state,
-            "zip_code": zipcode,
-            "phone_number": phone_number,
-            "email": email_address
-        }
-        contact = Contact(contact_dict)
-        address_book.create_contact(contact)
-        first_name = input("enter the first name")
-        address_book.display_contact(first_name)
+
+        while True:
+            print("\n1: create new contact\n2: display contact\n3: quit\n")
+            user_input = int(input("please choose your choice:- "))
+            if user_input == create_contacts:
+                first_name = input("Enter your first name:- ")
+                last_name = input("Enter your last name:- ")
+                address = input("Enter your address here:- ")
+                city = input("Enter your city name:- ")
+                state = input("Enter your state name:- ")
+                zipcode = int(input("Enter your zipcode:- "))
+                phone_number = int(input("Enter your phone number:- "))
+                email_address = input("Enter your email_address:- ")
+                contact_dict = {
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "address": address,
+                    "city": city,
+                    "state": state,
+                    "zip_code": zipcode,
+                    "phone_number": phone_number,
+                    "email": email_address
+                }
+                contact = Contact(contact_dict)
+                address_book.create_contact(contact)
+            elif user_input == display_contacts:
+                first_name = input("enter the first name:- ")
+                address_book.display_contact(first_name)
+            elif user_input == quit_program:
+                print("you are quit the program")
+            else:
+                print("invalid choice")
+
     except Exception as e:
         print(e)
 
