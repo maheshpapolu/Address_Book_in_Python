@@ -7,18 +7,21 @@ class Contact:
     quit_program = 6
 
     def __init__(self, contact_dict):
-        """
-        create constructor for class contact
-        :param contact_dict:
-        """
-        self.first_name = contact_dict.get("first_name")
-        self.last_name = contact_dict.get("last_name")
-        self.address = contact_dict.get("address")
-        self.city = contact_dict.get("city")
-        self.state = contact_dict.get("state")
-        self.zipcode = contact_dict.get("zipcode")
-        self.phone_number = contact_dict.get("phone_number")
-        self.email_address = contact_dict.get("email_address")
+        try:
+            """
+            create constructor for class contact
+            :param contact_dict:
+            """
+            self.first_name = contact_dict.get("first_name")
+            self.last_name = contact_dict.get("last_name")
+            self.address = contact_dict.get("address")
+            self.city = contact_dict.get("city")
+            self.state = contact_dict.get("state")
+            self.zipcode = contact_dict.get("zipcode")
+            self.phone_number = contact_dict.get("phone_number")
+            self.email_address = contact_dict.get("email_address")
+        except Exception as el:
+            print(el)
 
     def __str__(self) -> str:
         """
@@ -42,9 +45,12 @@ class AddressBook:
         create a function name as person_information in class AddressBook
         :return:
         """
-        self.contact_dict.update({contact_obj.first_name: contact_obj})
+        try:
+            self.contact_dict.update({contact_obj.first_name: contact_obj})
 
-        return self.contact_dict
+            return self.contact_dict
+        except Exception as msg:
+            print(msg)
 
     def display_contact(self, first_name):
         """
@@ -53,12 +59,15 @@ class AddressBook:
         :return:
         """
 
-        # contact_obj = self.get_contact(first_name)
-        if self.get_contact(first_name) is not None:
-            for k, v in self.get_contact(first_name).items():
-                print(k, v.last_name, v.address, v.city, v.state, v.zipcode, v.phone_number, v.email_address)
-        else:
-            print("Address book not exit")
+        try:
+            contact_obj = self.get_contact(first_name)
+            if contact_obj is not None:
+                for k, v in contact_obj.items():
+                    print(k, v.last_name, v.address, v.city, v.state, v.zipcode, v.phone_number, v.email_address)
+            else:
+                print("Address book not exit")
+        except Exception as mes:
+            print(mes)
 
     def get_contact(self, first_name):
         """
@@ -195,20 +204,19 @@ if __name__ == '__main__':
             print("\n1: create new contact\n2: display contact\n3: display company\n4: delete contact\n5: edit_contact"
                   "\n6: quit")
             user_input = int(input("please choose your choice:- "))
-            if user_input == 1:
-                multiple_add_book.create_contact()
-            elif user_input == 2:
-                multiple_add_book.display_contact()
-            elif user_input == 3:
-                multiple_add_book.display_addressbook()
-            elif user_input == 4:
-                multiple_add_book.delete_contact()
-            elif user_input == 5:
-                multiple_add_book.edit_contact()
-            elif user_input == 6:
-                print("you are quit the program")
-            else:
-                print("invalid choice")
+            switcher = {
+                1: multiple_add_book.create_contact,
+                2: multiple_add_book.display_contact,
+                3: multiple_add_book.delete_contact,
+                4: multiple_add_book.edit_contact,
+                5: multiple_add_book.edit_contact,
+                6: multiple_add_book.edit_contact
+
+            }
+            if user_input == 0:
+                print("quit the program")
+                break
+            switcher.get(user_input)()
 
     except Exception as e:
         print(e)
